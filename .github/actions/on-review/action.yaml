@@ -23,4 +23,4 @@ runs:
           if (mostRecentReview.state !== 'APPROVED') {
             throw new Error('The most recent review on this pull request is not an approval review');
           }
-          exit(0);
+          core.setSuccess();
