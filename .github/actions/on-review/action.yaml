@@ -18,8 +18,9 @@ runs:
           if (reviews.data.length === 0) {
             throw new Error('No reviews found on this pull request');
           }
-          // Check that there is one approval review
-          const approvalReview = reviews.data.find(review => review.state === 'APPROVED');
-          if (!approvalReview) {
-            throw new Error('No approval review found on this pull request');
+          // Check that the most recent review is an approval review
+          const mostRecentReview = reviews.data.sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at))[0];
+          if (mostRecentReview.state !== 'APPROVED') {
+            throw new Error('The most recent review on this pull request is not an approval review');
           }
+          exit(0);
