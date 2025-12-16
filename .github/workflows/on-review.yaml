@@ -21,4 +21,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check Required Reviews
-        uses: nickjmoss/.github/.github/actions/on-review/action.yaml@main
+        uses: nickjmoss/.github/.github/actions/on-review@main
