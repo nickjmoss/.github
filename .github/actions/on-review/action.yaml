@@ -9,18 +9,17 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          # Check if there are any reviews on the pull request
+          // Check if there are any reviews on the pull request
           const reviews = await github.rest.pulls.listReviews({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.payload.pull_request.number,
           });
           if (reviews.data.length === 0) {
-            exit(1);
+            throw new Error('No reviews found on this pull request');
           }
-          # Check that there is one approval review
+          // Check that there is one approval review
           const approvalReview = reviews.data.find(review => review.state === 'APPROVED');
           if (!approvalReview) {
-            exit(1);
+            throw new Error('No approval review found on this pull request');
           }
-          exit(0);
